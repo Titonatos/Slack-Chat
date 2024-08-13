@@ -1,10 +1,9 @@
-const apiPath = '/api/v1';
-
 export default {
-  loginPath: () => [apiPath, 'login'].join('/'),
-  signupPath: () => [apiPath, 'signup'].join('/'),
-  dataPath: () => [apiPath, 'data'].join('/'),
-  chatPagePath: () => '/',
-  loginPagePath: () => '/login',
-  signupPagePath: () => '/signup',
+  baseUrl: () => '/api/v1',
+  chat: () => '/',
+  login: () => '/login',
+  signup: () => '/signup',
+  notFound: () => '*',
+  channels: () => '/api/v1/channels',
+  messages: () => '/api/v1/messages',
 };
