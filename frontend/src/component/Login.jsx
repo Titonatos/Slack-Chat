@@ -23,6 +23,7 @@ const LoginForm = () => {
       .required(t('login.errors.usernameRequired')),
     password: Yup.string().min(3, t('login.errors.passwordShort')).required(t('login.errors.passwordRequired')),
   });
+
   const handleSubmit = async ({ username, password }, { setErrors }) => {
     await loginReq({ username, password })
       .unwrap()
@@ -50,6 +51,7 @@ const LoginForm = () => {
         }
       });
   };
+
   return (
     <Formik
       initialValues={{

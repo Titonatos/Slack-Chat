@@ -25,6 +25,7 @@ const Signup = () => {
     password: Yup.string().min(6, t('signup.errors.shortPassword')).required(t('signup.errors.shortPassword')),
     confirmPassword: Yup.string().oneOf([Yup.ref('password')], t('signup.errors.passwordMatch')).required(t('signup.errors.required')),
   });
+
   const handleSubmit = async ({ username, password }, { setErrors }) => {
     await signup({ username, password })
       .unwrap()
@@ -36,6 +37,7 @@ const Signup = () => {
       })
       .catch((err) => {
         const { status } = err;
+        
         switch (status) {
           case 409: {
             setErrors({ username: ' ', password: ' ', confirmPassword: t('signup.errors.userExists') });
@@ -51,6 +53,7 @@ const Signup = () => {
         }
       });
   };
+
   return (
     <SignupComponent img={registr}>
       <Formik
