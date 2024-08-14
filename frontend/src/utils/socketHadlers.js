@@ -1,6 +1,11 @@
 import { toast } from 'react-toastify';
+import store from './slices/index.js';
 import { messagesApi } from './api/messagesApi.js';
 import { channelsApi } from './api/channelsApi.js';
+import i18next from 'i18next';
+
+const i18n = i18next.createInstance();
+
 
 const handleNewMessage = (newMessage) => {
     store.dispatch(

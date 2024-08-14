@@ -4,11 +4,13 @@ import { I18nextProvider } from 'react-i18next';
 import { Provider as RollBarProvider, ErrorBoundary } from '@rollbar/react';
 import i18next from 'i18next';
 import filter from 'leo-profanity';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { messagesApi } from './api/messagesApi.js';
+import { channelsApi } from './api/channelsApi.js';
 import App from './component/App.jsx';
 import store from './slices/index.js';
 import resources from './locales/index.js';
-import utils from './utils/socketHadlers.js';
-import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 /* eslint-disable react/destructuring-assignment */
@@ -23,7 +25,7 @@ const Init = async (socket) => {
       escapeValue: false,
     },
   });
-
+  
   const rollbarConfig = {
     accessToken: process.env.RollBar_Token,
     captureUncaught: true,
@@ -33,11 +35,58 @@ const Init = async (socket) => {
 
   filter.loadDictionary('ru');
 
+  const handleNewMessage = (newMessage) => {
+    store.dispatch(
+      messagesApi.util.updateQueryData(
+        'getMessages',
+        undefined,
+        (draftMessages) => { draftMessages.push(newMessage); },
+      ),
+    );
+  };
+
+  const handleNewChannel = (newChannel) => {
+    store.dispatch(
+      channelsApi.util.updateQueryData(
+        'getChannels',
+        undefined,
+        (draftChannels) => { draftChannels.push(newChannel); },
+      ),
+    );
+    toast.success(i18n.t('chat.notify.addChannel'));
+  };
+
+  const handleRenameChannel = ({ id, name }) => {
+    store.dispatch(
+      channelsApi.util.updateQueryData(
+        'getChannels',
+        undefined,
+        (draftChannels) => {
+          const channelIndexToUpdate = draftChannels.findIndex((channel) => channel.id === id);
+          const link = draftChannels;
+          link[channelIndexToUpdate].name = name;
+        },
+      ),
+    );
+    toast.success(i18n.t('chat.notify.renameChannel'));
+  };
+
+  const handleDeleteChannel = ({ id }) => {
+    store.dispatch(
+      channelsApi.util.updateQueryData(
+        'getChannels',
+        undefined,
+        (draft) => draft.filter((channel) => channel.id !== id),
+      ),
+    );
+    toast.success(i18n.t('chat.notify.removeChannel'));
+  };
+
   socket.connect();
-  socket.on('newMessage', utils.handleNewMessage);
-  socket.on('newChannel', utils.handleNewChannel);
-  socket.on('renameChannel', utils.handleRenameChannel);
-  socket.on('removeChannel', utils.handleDeleteChannel);
+  socket.on('newMessage', handleNewMessage);
+  socket.on('newChannel', handleNewChannel);
+  socket.on('renameChannel', handleRenameChannel);
+  socket.on('removeChannel', handleDeleteChannel);
 
   return (
     <Provider store={store}>
