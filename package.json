@@ -1,7 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
-  "description": "[![Actions Status](https://github.com/Titonatos/frontend-project-12/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Titonatos/frontend-project-12/actions)",
+  "description": "chat, hexlet project",
   "main": "index.js",
   "scripts": {
     "build": "npm run build --prefix frontend",

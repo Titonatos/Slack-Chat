@@ -26,7 +26,7 @@ const App = () => (
         <Route path={routes.login()} element={<Login />} />
         <Route path={routes.signup()} element={<Signup />} />
       </Routes>
-    </div>;
+    </div>
   </BrowserRouter>
 );
 
