@@ -1,4 +1,4 @@
-export default {
+const routes = {
   baseUrl: () => '/api/v1',
   chat: () => '/',
   login: () => '/login',
@@ -7,3 +7,5 @@ export default {
   channels: () => '/api/v1/channels',
   messages: () => '/api/v1/messages',
 };
+
+export default routes;
