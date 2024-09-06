@@ -17,7 +17,7 @@ const PrivateOutlet = () => {
 const App = () => (
   <BrowserRouter>
     <div className="d-flex flex-column h-100">
-    <NavComponent />
+      <NavComponent />
       <Routes>
         <Route path={routes.notFound()} element={<NotFound />} />
         <Route path={routes.chat()} element={<PrivateOutlet />}>

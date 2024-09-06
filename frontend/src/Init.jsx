@@ -25,7 +25,7 @@ const Init = async (socket) => {
       escapeValue: false,
     },
   });
-  
+
   const rollbarConfig = {
     accessToken: process.env.RollBar_Token,
     captureUncaught: true,

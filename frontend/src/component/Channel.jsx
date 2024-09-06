@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { setActiveChannel, setChannelModal } from '../slices/appSlice.js';
 import {
   Button, ButtonGroup, Dropdown,
 } from 'react-bootstrap';
+import { setActiveChannel, setChannelModal } from '../slices/appSlice.js';
 
 const Channel = ({ channel }) => {
   const { t } = useTranslation();

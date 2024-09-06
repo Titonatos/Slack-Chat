@@ -24,13 +24,14 @@ const MessagesComponent = () => {
   const { data = [] } = useGetMessagesQuery();
   const currentChatMessages = data.filter((m) => m.channelId === currentChannelId);
   const [addMessage] = useAddMessageMutation();
+  filter.loadDictionary();
   const handleFormSubmit = async ({ message }, { resetForm }) => {
     const cleanMessage = filter.clean(message);
     const payload = { body: cleanMessage, channelId: currentChannelId, username };
     await addMessage(payload);
     resetForm();
   };
-  
+
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">

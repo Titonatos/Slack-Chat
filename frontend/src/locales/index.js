@@ -1,6 +1,6 @@
 import ru from './ru.js';
 
-const locales =  {
+const locales = {
   ru,
 };
 

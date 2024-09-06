@@ -37,7 +37,7 @@ const Signup = () => {
       })
       .catch((err) => {
         const { status } = err;
-        
+
         switch (status) {
           case 409: {
             setErrors({ username: ' ', password: ' ', confirmPassword: t('signup.errors.userExists') });
