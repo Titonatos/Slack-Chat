@@ -3,7 +3,6 @@ const routes = {
   chat: () => '/',
   login: () => '/login',
   signup: () => '/signup',
-  notFound: () => '*',
   channels: () => '/api/v1/channels',
   messages: () => '/api/v1/messages',
 };

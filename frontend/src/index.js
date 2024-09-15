@@ -7,7 +7,7 @@ const chatApp = async () => {
   const socket = io(URL, {
     autoConnect: false,
   });
-  const root = ReactDOM.createRoot(document.getElementById('root'));
+  const root = ReactDOM.createRoot(document.getElementById('chat'));
   root.render(await init(socket));
 };
 

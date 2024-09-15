@@ -19,7 +19,7 @@ const App = () => (
     <div className="d-flex flex-column h-100">
       <NavComponent />
       <Routes>
-        <Route path={routes.notFound()} element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
         <Route path={routes.chat()} element={<PrivateOutlet />}>
           <Route path="" element={<Chat />} />
         </Route>
