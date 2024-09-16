@@ -35,22 +35,15 @@ const Signup = () => {
         dispatch(setUserAuth({ token: data.token, username: data.username }));
         navigate(routes.chat());
       })
-      .catch((err) => {
-        const { status } = err;
+      .catch(({ status }) => {
+        const errorsMap = {
+          409: t('signup.errors.userExists'),
+          FETCH_ERROR: t('signup.errors.network'),
+        };
 
-        switch (status) {
-          case 409: {
-            setErrors({ username: ' ', password: ' ', confirmPassword: t('signup.errors.userExists') });
-            break;
-          }
-          case 'FETCH_ERROR': {
-            setErrors({ username: ' ', password: ' ', confirmPassword: t('signup.errors.network') });
-            break;
-          }
-          default: {
-            setErrors({ username: ' ', password: ' ', confirmPassword: t('signup.errors.defaultErr') });
-          }
-        }
+        const errorText = errorsMap[status] ?? t('signup.errors.defaultErr');
+
+        setErrors({ username: ' ', password: ' ', confirmPassword: errorText });
       });
   };
 
@@ -60,11 +53,10 @@ const Signup = () => {
         initialValues={{ username: '', password: '', confirmPassword: '' }}
         onSubmit={handleSubmit}
         validationSchema={signupSchema}
-        validateOnChange={false}
-        validateOnBlur
+        validateOnBlur={false}
       >
         {({
-          errors, values, handleChange, handleBlur, isSubmitting,
+          errors, values, touched, handleChange, handleBlur, isSubmitting,
         }) => (
           <Form className="w-50">
             <h1 className="text-center mb-4">{t('signup.form.header')}</h1>
@@ -75,11 +67,11 @@ const Signup = () => {
                 value={values.username}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                isInvalid={!!errors.username}
+                isInvalid={!!errors.username && touched.username}
                 autoFocus
               />
               <FormLabel htmlFor="username">{t('signup.form.username')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{errors.username}</FormGroup>
+              {errors.username && touched.username ? <FormGroup className="invalid-tooltip">{errors.username}</FormGroup> : null}
             </FormFloating>
 
             <FormFloating className="mb-3">
@@ -90,10 +82,10 @@ const Signup = () => {
                 value={values.password}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                isInvalid={!!errors.password}
+                isInvalid={!!errors.password && touched.password}
               />
               <FormLabel htmlFor="password">{t('signup.form.password')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{errors.password}</FormGroup>
+              {errors.password && touched.password ? <FormGroup className="invalid-tooltip">{errors.password}</FormGroup> : null}
             </FormFloating>
 
             <FormFloating className=" mb-4">
@@ -104,10 +96,10 @@ const Signup = () => {
                 value={values.confirmPassword}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                isInvalid={!!errors.confirmPassword}
+                isInvalid={!!errors.confirmPassword && touched.confirmPassword}
               />
               <FormLabel htmlFor="confirmPassword">{t('signup.form.confirmPassword')}</FormLabel>
-              <FormGroup className="invalid-tooltip">{errors.confirmPassword}</FormGroup>
+              {errors.password && touched.password ? <FormGroup className="invalid-tooltip">{errors.confirmPassword}</FormGroup> : null}
             </FormFloating>
             <Button type="submit" variant="outline-primary" className="w-100" disabled={isSubmitting}>
               {t('signup.form.regBtn')}
