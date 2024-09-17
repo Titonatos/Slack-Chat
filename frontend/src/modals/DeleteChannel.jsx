@@ -19,6 +19,7 @@ const DeleteChannel = ({
     dispatch(setActiveChannel(defaultChannel));
     onHide();
   };
+
   return (
     <Modal show={modalType === 'removing'} onHide={onHide} centered>
       <Modal.Header closeButton>

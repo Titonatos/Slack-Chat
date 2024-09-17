@@ -13,15 +13,14 @@ const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
-    setActiveChannel: (state, action) => {
-      const { name, id } = action.payload;
+    setActiveChannel: (state, { payload: { id, name } }) => {
       state.currentChannelId = id;
       state.currentChannelName = name;
     },
-    setChannelModal: (state, action) => {
-      state.modalChannelId = action.payload.id;
-      state.modalChannelName = action.payload.name;
-      state.modalType = action.payload.modalType;
+    setChannelModal: (state, { payload: { id, name, modalType } }) => {
+      state.modalChannelId = id;
+      state.modalChannelName = name;
+      state.modalType = modalType;
     },
   },
 });
