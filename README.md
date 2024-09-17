@@ -4,6 +4,9 @@
 ### CodeClimate
 [![Maintainability](https://api.codeclimate.com/v1/badges/85f33f44639711afa21e/maintainability)](https://codeclimate.com/github/Titonatos/frontend-project-12/maintainability)
 
+### Linter
+[![eslint-check](https://github.com/Titonatos/Slack-Chat/actions/workflows/linter.yml/badge.svg)](https://github.com/Titonatos/Slack-Chat/actions/workflows/linter.yml)
+
 
 ## Hexlet Chat
 
