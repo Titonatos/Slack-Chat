@@ -14,5 +14,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-      - run: cd frontend
-      - run: npx eslint --ext js,jsx --no-eslintrc --config .eslintrc.yml .
+      - run: npm install
+      - run: make lint-frontend
