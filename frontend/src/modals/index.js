@@ -25,6 +25,7 @@ const BasicModal = () => {
   const channelNameSchema = Yup.object().shape({
     channelName: Yup
       .string()
+      .trim()
       .notOneOf(channelsNames, t('chat.modals.errors.uniqueName'))
       .min(3, t('chat.modals.errors.shortChannelName'))
       .max(20, t('chat.modals.errors.longChannelName'))
