@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
 import { useRemoveChannelMutation } from '../api/channelsApi';
-import { setActiveChannel } from '../slices/appSlice';
+import { setDefaultChannel } from '../slices/appSlice.js';
 
 const DeleteChannel = ({
   onHide,
@@ -13,10 +13,8 @@ const DeleteChannel = ({
   const { t } = useTranslation();
   const [removeChannelById] = useRemoveChannelMutation();
   const handleFormSubmit = async () => {
-    console.log(modalId);
     await removeChannelById(modalId);
-    const defaultChannel = { id: '1', name: 'general' };
-    dispatch(setActiveChannel(defaultChannel));
+    dispatch(setDefaultChannel(modalId));
     onHide();
   };
 

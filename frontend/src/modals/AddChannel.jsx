@@ -26,9 +26,11 @@ const AddChannel = ({
     onHide();
   };
   const inputRef = useRef();
+
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
+
   return (
     <Modal show={modalType === 'adding'} onHide={onHide} centered>
       <Modal.Header closeButton>

@@ -11,7 +11,7 @@ import App from './component/App.jsx';
 import store from './slices/index.js';
 import resources from './locales/index.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { setActiveChannel } from './slices/appSlice.js';
+import { setDefaultChannel } from './slices/appSlice.js';
 import RollBarProvider from './utils/RollBarProvider.jsx';
 
 /* eslint-disable react/destructuring-assignment */
@@ -73,8 +73,7 @@ const Init = async (socket) => {
         (draft) => draft.filter((channel) => channel.id !== id),
       ),
     );
-    const defaultChannel = { id: '1', name: 'general' };
-    store.dispatch(setActiveChannel(defaultChannel));
+    store.dispatch(setDefaultChannel(id));
     toast.success(i18n.t('chat.notify.removeChannel'));
   };
 
