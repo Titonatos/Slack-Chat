@@ -28,8 +28,6 @@ const LoginForm = () => {
     await loginReq({ username, password })
       .unwrap()
       .then((data) => {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('username', data.username);
         dispatch(setUserAuth({ token: data.token, username: data.username }));
         navigate(routes.chat());
       })
