@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form } from 'formik';
 import {
@@ -8,7 +9,7 @@ import { useSelector } from 'react-redux';
 import filter from 'leo-profanity';
 import { useGetMessagesQuery, useAddMessageMutation } from '../api/messagesApi';
 
-const Message = ({ messages }) => messages.map((message) => (
+const Messages = ({ messages }) => messages.map((message) => (
   <div className="text-break mb-2" key={message.id}>
     <b>{message.username}</b>
     :
@@ -24,12 +25,34 @@ const MessagesComponent = () => {
   const { data = [] } = useGetMessagesQuery();
   const currentChatMessages = data.filter((m) => m.channelId === currentChannelId);
   const [addMessage] = useAddMessageMutation();
+  const messagesEndRef = useRef(null);
+  const [isAtBottom, setIsAtBottom] = useState(true);
+
   filter.loadDictionary();
+
+  const handleScroll = () => {
+    const { scrollTop, scrollHeight, clientHeight } = messagesEndRef.current;
+    setIsAtBottom(scrollHeight === scrollTop + clientHeight);
+  };
+
+  const scrollToBottom = () => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    if (isAtBottom) {
+      scrollToBottom();
+    }
+  }, [currentChatMessages, isAtBottom]);
+
   const handleFormSubmit = async ({ message }, { resetForm }) => {
     const cleanMessage = filter.clean(message);
     const payload = { body: cleanMessage, channelId: currentChannelId, username };
     await addMessage(payload);
     resetForm();
+    scrollToBottom();
   };
 
   return (
@@ -47,8 +70,13 @@ const MessagesComponent = () => {
             {t('chat.messageCount.message', { count: currentChatMessages.length })}
           </span>
         </div>
-        <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-          <Message
+        <div
+          id="messages-box"
+          className="chat-messages overflow-auto px-5"
+          ref={messagesEndRef}
+          onScroll={handleScroll}
+        >
+          <Messages
             messages={currentChatMessages}
           />
         </div>

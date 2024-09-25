@@ -14,7 +14,7 @@ const DeleteChannel = ({
   const [removeChannelById] = useRemoveChannelMutation();
   const handleFormSubmit = async () => {
     await removeChannelById(modalId);
-    dispatch(setDefaultChannel(modalId));
+    dispatch(setDefaultChannel({ id: modalId }));
     onHide();
   };
 
