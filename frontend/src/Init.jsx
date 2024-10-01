@@ -4,6 +4,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18next from 'i18next';
 import filter from 'leo-profanity';
 import { toast } from 'react-toastify';
+import { Provider as RollBarProvider, ErrorBoundary } from '@rollbar/react';
 import 'react-toastify/dist/ReactToastify.css';
 import { messagesApi } from './api/messagesApi.js';
 import { channelsApi } from './api/channelsApi.js';
@@ -12,7 +13,6 @@ import store from './slices/index.js';
 import resources from './locales/index.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { setDefaultChannel } from './slices/appSlice.js';
-import RollBarProvider from './utils/RollBarProvider.jsx';
 
 /* eslint-disable react/destructuring-assignment */
 
@@ -26,6 +26,13 @@ const Init = async (socket) => {
       escapeValue: false,
     },
   });
+
+  const rollbarConfig = {
+    accessToken: process.env.RollBar_Token,
+    captureUncaught: true,
+    captureUnhandledRejections: true,
+    environment: process.env.RollBar_App_Environment,
+  };
 
   filter.loadDictionary('ru');
 
@@ -86,10 +93,12 @@ const Init = async (socket) => {
   return (
     <Provider store={store}>
       <React.StrictMode>
-        <RollBarProvider>
-          <I18nextProvider i18n={i18n}>
-            <App />
-          </I18nextProvider>
+        <RollBarProvider config={rollbarConfig}>
+          <ErrorBoundary>
+            <I18nextProvider i18n={i18n}>
+              <App />
+            </I18nextProvider>
+          </ErrorBoundary>
         </RollBarProvider>
       </React.StrictMode>
     </Provider>
