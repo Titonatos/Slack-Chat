@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import imagePath from '../assets/404.svg';
+import routes from '../routes.js';
 
 const NotFound = () => {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ const NotFound = () => {
       <p className="text-muted">
         {t('notFoundPage.body')}
         {' '}
-        <Link to="/">{t('notFoundPage.link')}</Link>
+        <Link to={routes.chat}>{t('notFoundPage.link')}</Link>
       </p>
     </div>
   );

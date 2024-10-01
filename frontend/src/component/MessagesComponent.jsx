@@ -1,4 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { useTranslation } from 'react-i18next';
 import { Formik, Form } from 'formik';
 import {
@@ -6,8 +11,8 @@ import {
 } from 'react-bootstrap';
 import { ArrowRightSquare } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
-import filter from 'leo-profanity';
 import { useGetMessagesQuery, useAddMessageMutation } from '../api/messagesApi';
+import Context from '../utils/Context';
 
 const Messages = ({ messages }) => messages.map((message) => (
   <div className="text-break mb-2" key={message.id}>
@@ -27,6 +32,7 @@ const MessagesComponent = () => {
   const [addMessage] = useAddMessageMutation();
   const messagesEndRef = useRef(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
+  const filter = useContext(Context);
 
   filter.loadDictionary();
 

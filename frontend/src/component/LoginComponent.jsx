@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import loginPicture from '../assets/login.jpg';
+import routes from '../routes.js';
 
 const LoginComponent = ({ children }) => {
   const { t } = useTranslation();
@@ -19,7 +20,7 @@ const LoginComponent = ({ children }) => {
               <div className="text-center">
                 <span>{t('login.form.footer')}</span>
                 {' '}
-                <Link to="/signup">{t('login.form.footerRegLink')}</Link>
+                <Link to={routes.signup}>{t('login.form.footerRegLink')}</Link>
               </div>
             </div>
           </div>

@@ -13,6 +13,7 @@ import store from './slices/index.js';
 import resources from './locales/index.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { setDefaultChannel } from './slices/appSlice.js';
+import Context from './utils/Context.jsx';
 
 /* eslint-disable react/destructuring-assignment */
 
@@ -96,7 +97,9 @@ const Init = async (socket) => {
         <RollBarProvider config={rollbarConfig}>
           <ErrorBoundary>
             <I18nextProvider i18n={i18n}>
-              <App />
+              <Context.Provider value={filter}>
+                <App />
+              </Context.Provider>
             </I18nextProvider>
           </ErrorBoundary>
         </RollBarProvider>
