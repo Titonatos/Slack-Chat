@@ -22,7 +22,7 @@ const appSlice = createSlice({
       state.modalChannelName = name;
       state.modalType = modalType;
     },
-    setDefaultChannel: (state, { payload: { id } }) => {
+    setDefaultChannel: (state, { payload: id }) => {
       if (state.currentChannelId === id) {
         const defaultChannel = { id: '1', name: 'general' };
         state.currentChannelId = defaultChannel.id;

@@ -2,19 +2,16 @@ import { useTranslation } from 'react-i18next';
 import { Modal, Button } from 'react-bootstrap';
 import { Formik, Form } from 'formik';
 import { useRemoveChannelMutation } from '../api/channelsApi';
-import { setDefaultChannel } from '../slices/appSlice.js';
 
 const DeleteChannel = ({
   onHide,
   modalType,
   modalId,
-  dispatch,
 }) => {
   const { t } = useTranslation();
   const [removeChannelById] = useRemoveChannelMutation();
   const handleFormSubmit = async () => {
     await removeChannelById(modalId);
-    dispatch(setDefaultChannel({ id: modalId }));
     onHide();
   };
 
