@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import loginPicture from '../assets/login.jpg';
-import routes from '../routes.js';
+import routes from '../routes';
 
 const LoginComponent = ({ children }) => {
+  console.log(routes.signup);
   const { t } = useTranslation();
   return (
     <div className="container-fluid h-100">
@@ -20,7 +21,7 @@ const LoginComponent = ({ children }) => {
               <div className="text-center">
                 <span>{t('login.form.footer')}</span>
                 {' '}
-                <Link to={routes.signup}>{t('login.form.footerRegLink')}</Link>
+                <Link to={routes.signup()}>{t('login.form.footerRegLink')}</Link>
               </div>
             </div>
           </div>
